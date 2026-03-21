@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.server.MinecraftServer;
 
 import java.io.*;
 import java.util.*;
@@ -15,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
+
+import com.ppp.util.OSDetector;
 
 public class ModCommands {
 
@@ -44,8 +47,18 @@ public class ModCommands {
         });
     }
 
+    private static boolean isWindowsSupported() {
+        return OSDetector.isWindows();
+    }
+
     private static int executeStart(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
+
+        if (!isWindowsSupported()) {
+            source.sendError(Text.translatable("text.mc-cmd-shell.error.unsupported_os"));
+            return 0;
+        }
+
         ServerPlayerEntity player = source.getPlayer();
         if (player == null) {
             source.sendError(Text.translatable("text.mc-cmd-shell.error.player_only"));
@@ -71,15 +84,24 @@ public class ModCommands {
 
     private static int executeRun(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
+
+        if (!isWindowsSupported()) {
+            source.sendError(Text.translatable("text.mc-cmd-shell.error.unsupported_os"));
+            return 0;
+        }
+
         ServerPlayerEntity player = source.getPlayer();
         if (player == null) {
             source.sendError(Text.translatable("text.mc-cmd-shell.error.player_only"));
             return 0;
         }
-        if (!player.getServer().isSingleplayer() && !player.hasPermissionLevel(4)) {
+
+        MinecraftServer server = player.getServer();
+        if (server == null || (!server.isSingleplayer() && !player.hasPermissionLevel(4))) {
             source.sendError(Text.translatable("text.mc-cmd-shell.error.op_only"));
             return 0;
         }
+
         UUID uuid = player.getUuid();
         CmdProcessHolder holder = PLAYER_CMD_PROCESSES.get(uuid);
         if (holder == null) {
@@ -100,6 +122,12 @@ public class ModCommands {
 
     private static int executeStop(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
+
+        if (!isWindowsSupported()) {
+            source.sendError(Text.translatable("text.mc-cmd-shell.error.unsupported_os"));
+            return 0;
+        }
+
         ServerPlayerEntity player = source.getPlayer();
         if (player == null) {
             source.sendError(Text.translatable("text.mc-cmd-shell.error.player_only"));
@@ -119,6 +147,12 @@ public class ModCommands {
 
     private static int executeConfirm(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
+
+        if (!isWindowsSupported()) {
+            source.sendError(Text.translatable("text.mc-cmd-shell.error.unsupported_os"));
+            return 0;
+        }
+
         ServerPlayerEntity player = source.getPlayer();
         if (player == null) {
             source.sendError(Text.translatable("text.mc-cmd-shell.error.player_only"));

@@ -5,13 +5,13 @@
   "name": "mc-cmd-shell",
   "description": "Allows executing system commands from Minecraft",
   "authors": [
-    "YourName"
+    "PPP"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/your/repo"
+    "sources": "https://github.com/zhushabi8-cpu/mc-cmd-shell"
   },
-  "license": "CC0-1.0",
+  "license": "ISC",
   "icon": "assets/mc-cmd-shell/icon.png",
   "environment": "*",
   "entrypoints": {
