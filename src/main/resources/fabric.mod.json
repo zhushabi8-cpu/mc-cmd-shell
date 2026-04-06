@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "mc-cmd-shell",
+  "version": "r1.2.3",
+  "name": "mc-cmd-shell",
+  "description": "Allows executing system commands from Minecraft",
+  "authors": [
+    "PPP"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/zhushabi8-cpu/mc-cmd-shell"
+  },
+  "license": "ISC",
+  "icon": "assets/mc-cmd-shell/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.ppp.ModMain"
+    ],
+    "client": [
+      "com.ppp.MccmdshellClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": ">=1.21 <=1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
